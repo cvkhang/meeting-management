@@ -2,7 +2,12 @@
 #include "loginwidget.h"
 #include "studentwidget.h"
 #include "teacherwidget.h"
+#include "serverconfigdialog.h"
 #include <QPushButton>
+#include <QMessageBox>
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,6 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
     , m_studentWidget(nullptr)
     , m_teacherWidget(nullptr)
 {
+    resize(1000, 700);
+    setWindowTitle("Meeting Management System");
+
+    // Create menu bar
+    createMenuBar();
+
+    // Show server config dialog first
+    showServerConfigDialog();
+
     setupUi();
 
     // Connect to server on startup
@@ -151,4 +165,53 @@ void MainWindow::onConnectionLost() {
 
 void MainWindow::showNotification(const QString &title, const QString &message) {
     QMessageBox::information(this, title, message);
+}
+
+void MainWindow::showServerConfigDialog() {
+    ServerConfigDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        QString ip = dialog.getServerIp();
+        int port = dialog.getServerPort();
+        
+        // Try to connect
+        if (!m_networkManager->connectToServer(ip, port)) {
+            QMessageBox::critical(this, "Lỗi kết nối", 
+                QString("Không thể kết nối đến server %1:%2\n\nVui lòng kiểm tra:\n- Server đang chạy\n- Địa chỉ IP và Port đúng\n- Firewall không chặn kết nối")
+                .arg(ip).arg(port));
+            // Show dialog again
+            showServerConfigDialog();
+        }
+    } else {
+        // User cancelled, close app
+        QMessageBox::information(this, "Thông báo", "Cần kết nối server để sử dụng ứng dụng");
+        close();
+    }
+}
+
+void MainWindow::createMenuBar() {
+    QMenuBar *menuBar = new QMenuBar(this);
+    setMenuBar(menuBar);
+    
+    // File menu
+    QMenu *fileMenu = menuBar->addMenu("Tệp");
+    
+    QAction *serverSettingsAction = new QAction("Cài đặt Server...", this);
+    connect(serverSettingsAction, &QAction::triggered, [this]() {
+        // Disconnect first
+        m_networkManager->disconnectFromServer();
+        m_networkManager->clearLoginInfo();
+        
+        // Show config dialog
+        showServerConfigDialog();
+        
+        // Return to login
+        m_stackedWidget->setCurrentIndex(0);
+    });
+    fileMenu->addAction(serverSettingsAction);
+    
+    fileMenu->addSeparator();
+    
+    QAction *exitAction = new QAction("Thoát", this);
+    connect(exitAction, &QAction::triggered, this, &QMainWindow::close);
+    fileMenu->addAction(exitAction);
 }

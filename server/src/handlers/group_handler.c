@@ -250,7 +250,7 @@ void handle_request_join_group(int socket_fd, char *payload) {
         }
         sqlite3_finalize(grp_stmt);
         
-        // Notify group admins about new join request
+        // Notify group admin about new join request
         const char *admin_sql = "SELECT user_id FROM group_members WHERE group_id = ? AND role = 1";
         sqlite3_stmt *admin_stmt;
         sqlite3_prepare_v2(db, admin_sql, -1, &admin_stmt, NULL);

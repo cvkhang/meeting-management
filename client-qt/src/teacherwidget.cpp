@@ -108,6 +108,59 @@ void TeacherWidget::setupUi() {
     QWidget *meetingsTab = new QWidget();
     QVBoxLayout *meetingsLayout = new QVBoxLayout(meetingsTab);
 
+    // Date range filter controls (consistent with StudentWidget)
+    QHBoxLayout *dateFilterLayout = new QHBoxLayout();
+    
+    dateFilterLayout->addWidget(new QLabel("Từ:"));
+    m_meetingFromDate = new QDateEdit(QDate::currentDate());
+    m_meetingFromDate->setCalendarPopup(true);
+    m_meetingFromDate->setDisplayFormat("dd/MM/yyyy");
+    dateFilterLayout->addWidget(m_meetingFromDate);
+    
+    dateFilterLayout->addWidget(new QLabel("Đến:"));
+    m_meetingToDate = new QDateEdit(QDate::currentDate().addDays(7));
+    m_meetingToDate->setCalendarPopup(true);
+    m_meetingToDate->setDisplayFormat("dd/MM/yyyy");
+    dateFilterLayout->addWidget(m_meetingToDate);
+    
+    QPushButton *todayBtn = new QPushButton("Hôm nay");
+    connect(todayBtn, &QPushButton::clicked, [this]() {
+        m_meetingFromDate->setDate(QDate::currentDate());
+        m_meetingToDate->setDate(QDate::currentDate());
+        onViewMeetings();
+    });
+    dateFilterLayout->addWidget(todayBtn);
+    
+    QPushButton *thisWeekBtn = new QPushButton("Tuần này");
+    connect(thisWeekBtn, &QPushButton::clicked, [this]() {
+        QDate today = QDate::currentDate();
+        int daysToMonday = today.dayOfWeek() - 1;
+        m_meetingFromDate->setDate(today.addDays(-daysToMonday));
+        m_meetingToDate->setDate(today.addDays(6 - daysToMonday));
+        onViewMeetings();
+    });
+    dateFilterLayout->addWidget(thisWeekBtn);
+    
+    QPushButton *thisMonthBtn = new QPushButton("Tháng này");
+    connect(thisMonthBtn, &QPushButton::clicked, [this]() {
+        QDate today = QDate::currentDate();
+        m_meetingFromDate->setDate(QDate(today.year(), today.month(), 1));
+        m_meetingToDate->setDate(QDate(today.year(), today.month(), today.daysInMonth()));
+        onViewMeetings();
+    });
+    dateFilterLayout->addWidget(thisMonthBtn);
+    
+    QPushButton *allBtn = new QPushButton("Tất cả");
+    connect(allBtn, &QPushButton::clicked, [this]() {
+        m_meetingFromDate->setDate(QDate(2000, 1, 1));
+        m_meetingToDate->setDate(QDate(2099, 12, 31));
+        onViewMeetings();
+    });
+    dateFilterLayout->addWidget(allBtn);
+    
+    dateFilterLayout->addStretch();
+    meetingsLayout->addLayout(dateFilterLayout);
+
     QPushButton *refreshMeetingsBtn = new QPushButton("Tải lịch hẹn");
     connect(refreshMeetingsBtn, &QPushButton::clicked, this, &TeacherWidget::onViewMeetings);
     meetingsLayout->addWidget(refreshMeetingsBtn);
@@ -117,6 +170,25 @@ void TeacherWidget::setupUi() {
     m_meetingsTable->setHorizontalHeaderLabels({"ID", "Ngày", "Bắt đầu", "Kết thúc", "Loại", "Trạng thái", "Action"});
     m_meetingsTable->horizontalHeader()->setStretchLastSection(true);
     m_meetingsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_meetingsTable->setAlternatingRowColors(true);
+    
+    // Auto-fill Meeting ID when clicking a row
+    connect(m_meetingsTable, &QTableWidget::cellClicked, [this](int row, int) {
+        QTableWidgetItem *item = m_meetingsTable->item(row, 0);
+        if (item) {
+            m_meetingIdSpin->setValue(item->text().toInt());
+        }
+    });
+    
+    // Double-click to view meeting detail
+    connect(m_meetingsTable, &QTableWidget::cellDoubleClicked, [this](int row, int) {
+        QTableWidgetItem *item = m_meetingsTable->item(row, 0);
+        if (item) {
+            m_meetingIdSpin->setValue(item->text().toInt());
+            onViewMeetingDetail();
+        }
+    });
+    
     meetingsLayout->addWidget(m_meetingsTable);
     
     QGroupBox *detailGroup = new QGroupBox("Chi tiết & Biên bản");
@@ -163,15 +235,32 @@ void TeacherWidget::setupUi() {
     QGroupBox *historyGroup = new QGroupBox("Lịch sử cuộc họp");
     QVBoxLayout *historyLayout = new QVBoxLayout(historyGroup);
     
+    // History filter bar
+    QHBoxLayout *historyFilterLayout = new QHBoxLayout();
+    
+    historyFilterLayout->addWidget(new QLabel("Lọc trạng thái:"));
+    
+    m_historyStatusCombo = new QComboBox();
+    m_historyStatusCombo->addItems({"Tất cả", "DONE", "CANCELLED"});
+    m_historyStatusCombo->setMinimumWidth(100);
+    connect(m_historyStatusCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), 
+            this, &TeacherWidget::onViewHistory);
+    historyFilterLayout->addWidget(m_historyStatusCombo);
+    
     QPushButton *refreshHistoryBtn = new QPushButton("Tải lịch sử");
+    refreshHistoryBtn->setStyleSheet("background-color: #673AB7; color: white; padding: 6px 12px;");
     connect(refreshHistoryBtn, &QPushButton::clicked, this, &TeacherWidget::onViewHistory);
-    historyLayout->addWidget(refreshHistoryBtn);
+    historyFilterLayout->addWidget(refreshHistoryBtn);
+    
+    historyFilterLayout->addStretch();
+    historyLayout->addLayout(historyFilterLayout);
     
     m_historyTable = new QTableWidget();
     m_historyTable->setColumnCount(7);
-    m_historyTable->setHorizontalHeaderLabels({"ID", "Ngày", "Thời gian", "Đối tượng", "Loại", "Biên bản", "Action"});
+    m_historyTable->setHorizontalHeaderLabels({"ID", "Ngày", "Thời gian", "Đối tượng", "Loại", "Trạng thái", "Action"});
     m_historyTable->horizontalHeader()->setStretchLastSection(true);
     m_historyTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_historyTable->setAlternatingRowColors(true);
     historyLayout->addWidget(m_historyTable);
     
     meetingsLayout->addWidget(historyGroup);
@@ -373,7 +462,20 @@ void TeacherWidget::onDeleteSlot() {
 }
 
 void TeacherWidget::onViewMeetings() {
-    QString cmd = QString("VIEW_MEETINGS|token=%1\r\n").arg(m_networkManager->getToken());
+    // Get date range from pickers
+    QDate fromDate = m_meetingFromDate->date();
+    QDate toDate = m_meetingToDate->date();
+    
+    QString cmd;
+    if (fromDate.year() > 2000 && toDate.year() < 2099) {
+        cmd = QString("VIEW_MEETINGS|token=%1;from_date=%2;to_date=%3\r\n")
+            .arg(m_networkManager->getToken())
+            .arg(fromDate.toString("yyyy-MM-dd"))
+            .arg(toDate.toString("yyyy-MM-dd"));
+    } else {
+        cmd = QString("VIEW_MEETINGS|token=%1\r\n").arg(m_networkManager->getToken());
+    }
+    
     QString response = m_networkManager->sendRequest(cmd);
     
     clearTable(m_meetingsTable);
@@ -384,6 +486,11 @@ void TeacherWidget::onViewMeetings() {
         for (const QString &m : list) {
             QStringList parts = m.split(',');
             if (parts.size() >= 8) {
+                // Only show BOOKED meetings in this tab (CANCELLED goes to History)
+                if (parts[7] != "BOOKED") {
+                    continue;
+                }
+                
                 int row = m_meetingsTable->rowCount();
                 m_meetingsTable->insertRow(row);
                 m_meetingsTable->setItem(row, 0, new QTableWidgetItem(parts[0]));
@@ -394,16 +501,14 @@ void TeacherWidget::onViewMeetings() {
                 m_meetingsTable->setItem(row, 5, new QTableWidgetItem(parts[7]));
                 
                 // Add complete button for BOOKED meetings
-                if (parts[7] == "BOOKED") {
-                    QPushButton *completeBtn = new QPushButton("Hoàn thành");
-                    completeBtn->setStyleSheet("background-color: #4CAF50; color: white;");
-                    int meetingId = parts[0].toInt();
-                    connect(completeBtn, &QPushButton::clicked, [this, meetingId]() {
-                        m_meetingIdSpin->setValue(meetingId);
-                        onCompleteMeeting();
-                    });
-                    m_meetingsTable->setCellWidget(row, 6, completeBtn);
-                }
+                QPushButton *completeBtn = new QPushButton("Hoàn thành");
+                completeBtn->setStyleSheet("background-color: #4CAF50; color: white;");
+                int meetingId = parts[0].toInt();
+                connect(completeBtn, &QPushButton::clicked, [this, meetingId]() {
+                    m_meetingIdSpin->setValue(meetingId);
+                    onCompleteMeeting();
+                });
+                m_meetingsTable->setCellWidget(row, 6, completeBtn);
             }
         }
     }
@@ -556,46 +661,60 @@ void TeacherWidget::onCompleteMeeting() {
 }
 
 void TeacherWidget::onViewHistory() {
-    QString cmd = QString("VIEW_MEETING_HISTORY|token=%1\r\n").arg(m_networkManager->getToken());
+    // Get all meetings, then filter for history (DONE and CANCELLED)
+    QString cmd = QString("VIEW_MEETINGS|token=%1\r\n").arg(m_networkManager->getToken());
     QString response = m_networkManager->sendRequest(cmd);
     
     clearTable(m_historyTable);
     int status = NetworkManager::getStatusCode(response);
     
+    // Get selected filter
+    QString filterStatus = m_historyStatusCombo->currentText();
+    
     if (status == 200) {
-        QString history = NetworkManager::getValue(response, "history");
+        QString meetings = NetworkManager::getValue(response, "meetings");
         
-        if (!history.isEmpty()) {
-            QStringList list = history.split('#');
-            for (const QString &h : list) {
-                QStringList parts = h.split(',');
-                // Format: meeting_id,date,start_time,end_time,partner_name,type,has_minutes
-                if (parts.size() >= 7) {
+        if (!meetings.isEmpty()) {
+            QStringList list = meetings.split('#');
+            for (const QString &m : list) {
+                QStringList parts = m.split(',');
+                // Format: meeting_id,date,start_time,end_time,slot_id,partner_id,type,status
+                if (parts.size() >= 8) {
+                    QString meetingStatus = parts[7];
+                    
+                    // Filter logic based on combo selection
+                    if (filterStatus == "Tất cả") {
+                        // Show DONE and CANCELLED only
+                        if (meetingStatus != "DONE" && meetingStatus != "CANCELLED") {
+                            continue;
+                        }
+                    } else {
+                        // Show only the selected status
+                        if (meetingStatus != filterStatus) {
+                            continue;
+                        }
+                    }
+                    
                     int row = m_historyTable->rowCount();
                     m_historyTable->insertRow(row);
                     
                     m_historyTable->setItem(row, 0, new QTableWidgetItem(parts[0]));  // ID
                     m_historyTable->setItem(row, 1, new QTableWidgetItem(parts[1]));  // Date
                     m_historyTable->setItem(row, 2, new QTableWidgetItem(parts[2] + " - " + parts[3]));  // Time
-                    m_historyTable->setItem(row, 3, new QTableWidgetItem(parts[4]));  // Partner name
-                    m_historyTable->setItem(row, 4, new QTableWidgetItem(parts[5]));  // Type
+                    m_historyTable->setItem(row, 3, new QTableWidgetItem(parts[5]));  // Partner ID
+                    m_historyTable->setItem(row, 4, new QTableWidgetItem(parts[6]));  // Type
+                    m_historyTable->setItem(row, 5, new QTableWidgetItem(meetingStatus));  // Status
                     
-                    // Minutes indicator
-                    QString minutesStatus = parts[6] == "1" ? "Đã có" : "Chưa có";
-                    m_historyTable->setItem(row, 5, new QTableWidgetItem(minutesStatus));
-                    
-                    // Add view button if has minutes
-                    if (parts[6] == "1") {
-                        QPushButton *viewBtn = new QPushButton("Xem");
-                        viewBtn->setStyleSheet("background-color: #2196F3; color: white; padding: 4px 8px;");
-                        int meetingId = parts[0].toInt();
-                        connect(viewBtn, &QPushButton::clicked, [this, meetingId]() {
-                            m_meetingIdSpin->setValue(meetingId);
-                            m_tabWidget->setCurrentIndex(1);  // Switch to Meetings tab
-                            onViewMinutes();
-                        });
-                        m_historyTable->setCellWidget(row, 6, viewBtn);
-                    }
+                    // Add view minutes button
+                    QPushButton *viewBtn = new QPushButton("Xem biên bản");
+                    viewBtn->setStyleSheet("background-color: #2196F3; color: white; padding: 4px 8px;");
+                    int meetingId = parts[0].toInt();
+                    connect(viewBtn, &QPushButton::clicked, [this, meetingId]() {
+                        m_meetingIdSpin->setValue(meetingId);
+                        m_tabWidget->setCurrentIndex(1);  // Switch to Meetings tab
+                        onViewMinutes();
+                    });
+                    m_historyTable->setCellWidget(row, 6, viewBtn);
                 }
             }
         }

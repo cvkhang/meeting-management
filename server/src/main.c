@@ -65,7 +65,20 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    printf("Server listening on port %d\n", PORT);
+    printf("====================================\n");
+    printf("Server is running!\n");
+    printf("====================================\n");
+    printf("Port: %d\n", PORT);
+    printf("\nAvailable network interfaces:\n");
+    
+    // Get all network interfaces
+    system("hostname -I 2>/dev/null || ifconfig | grep 'inet ' | awk '{print $2}' | grep -v '127.0.0.1'");
+    
+    printf("\nClients can connect using:\n");
+    printf("  - Localhost: 127.0.0.1:%d\n", PORT);
+    printf("  - LAN IP: <IP from above>:%d\n", PORT);
+    printf("====================================\n\n");
+    printf("Waiting for connections...\n\n");
 
     while (1) {
         struct sockaddr_in client_addr;

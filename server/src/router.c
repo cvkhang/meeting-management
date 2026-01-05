@@ -47,8 +47,6 @@ void process_command(int socket_fd, char *buffer) {
         handle_complete_meeting(socket_fd, payload);
     } else if (strcmp(command, "VIEW_MEETING_DETAIL") == 0) {
         handle_view_meeting_detail(socket_fd, payload);
-    } else if (strcmp(command, "VIEW_MEETING_HISTORY") == 0) {
-        handle_view_meeting_history(socket_fd, payload);
     }
     // Minutes management
     else if (strcmp(command, "SAVE_MINUTES") == 0) {

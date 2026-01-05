@@ -91,6 +91,8 @@ cleanup:
 
 void handle_view_slots(int socket_fd, char *payload) {
     char *teacher_id_str = get_value(payload, "teacher_id");
+    char *from_date = get_value(payload, "from_date");
+    char *to_date = get_value(payload, "to_date");
     
     if (!teacher_id_str) {
         char *response = "400|msg=Missing_teacher_id\r\n";
@@ -98,10 +100,9 @@ void handle_view_slots(int socket_fd, char *payload) {
         return;
     }
 
-    // Show slots that don't have DONE meetings (past meetings don't show)
-    // AVAILABLE: No meeting OR only CANCELLED meetings
-    // BOOKED: Has BOOKED meeting
-    const char *sql = 
+    // Build SQL with optional date filters
+    char sql[1024];
+    snprintf(sql, sizeof(sql),
         "SELECT s.slot_id, s.date, s.start_time, s.end_time, s.slot_type, s.max_group_size, "
         "CASE "
         "  WHEN EXISTS(SELECT 1 FROM meetings WHERE slot_id = s.slot_id AND status = 'DONE') THEN 'DONE' "
@@ -110,11 +111,19 @@ void handle_view_slots(int socket_fd, char *payload) {
         "END as status "
         "FROM slots s "
         "WHERE s.teacher_id = ? "
-        "AND NOT EXISTS(SELECT 1 FROM meetings WHERE slot_id = s.slot_id AND status = 'DONE')";
+        "AND NOT EXISTS(SELECT 1 FROM meetings WHERE slot_id = s.slot_id AND status = 'DONE') "
+        "%s %s "
+        "ORDER BY s.date, s.start_time",
+        from_date ? "AND s.date >= ?" : "",
+        to_date ? "AND s.date <= ?" : "");
     
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-    sqlite3_bind_int(stmt, 1, atoi(teacher_id_str));
+    
+    int param = 1;
+    sqlite3_bind_int(stmt, param++, atoi(teacher_id_str));
+    if (from_date) sqlite3_bind_text(stmt, param++, from_date, -1, SQLITE_STATIC);
+    if (to_date) sqlite3_bind_text(stmt, param++, to_date, -1, SQLITE_STATIC);
 
     char buffer[4096] = "200|slots=";
     int first = 1;
@@ -137,8 +146,12 @@ void handle_view_slots(int socket_fd, char *payload) {
     strcat(buffer, "\r\n");
     send_response(socket_fd, buffer);
     sqlite3_finalize(stmt);
+    
     free(teacher_id_str);
+    if (from_date) free(from_date);
+    if (to_date) free(to_date);
 }
+
 
 void handle_edit_slot(int socket_fd, char *payload) {
     char *token = get_value(payload, "token");

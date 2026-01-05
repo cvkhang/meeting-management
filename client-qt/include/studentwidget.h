@@ -60,6 +60,8 @@ private:
     // Meetings tab
     QTableWidget *m_meetingsTable;
     QSpinBox *m_meetingIdSpin;
+    QDateEdit *m_meetingFromDate;
+    QDateEdit *m_meetingToDate;
     
     // Groups tab
     QTableWidget *m_groupsTable;       // Groups user joined
@@ -71,6 +73,7 @@ private:
     
     // History tab
     QTableWidget *m_historyTable;
+    QComboBox *m_historyStatusCombo;
     
     // Helper for group booking
     QComboBox *m_groupComboForBooking;

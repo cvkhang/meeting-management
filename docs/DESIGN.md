@@ -761,45 +761,45 @@ S→C: 201|group_id=<gid>;msg=Group_created\r\n
 **Ví dụ:**
 ```
 C→S: CREATE_GROUP|token=token_10_STUDENT;group_name=Team Alpha\r\n
-S→C: 201|group_id=5;msg=Group_created\r\n
+S→C: 201|group_id=5\r\n
 ```
+
+**Note:** Response chỉ có `group_id`, không có `msg`
 
 ---
 
-**Xem nhóm của mình (admin/member):**
+**Xem danh sách groups:**
 ```
-C→S: VIEW_MY_GROUPS|token=<t>\r\n
+C→S: VIEW_GROUPS|token=<t>\r\n
 S→C: 200|groups=<g1>#<g2>#...\r\n
 ```
 
-**Group format:** `group_id,group_name,member_count,is_admin`
+**Group format:** `group_id,group_name,member_count,is_member,role`
+- `is_member`: `1` nếu user là member, `0` nếu không
+- `role`: `1` = admin, `0` = member (chỉ có ý nghĩa khi `is_member=1`)
 
 **Ví dụ:**
 ```
-C→S: VIEW_MY_GROUPS|token=token_10_STUDENT\r\n
-S→C: 200|groups=3,Team Alpha,4,1#5,Team Beta,3,0\r\n
+C→S: VIEW_GROUPS|token=token_10_STUDENT\r\n
+S→C: 200|groups=3,Team Alpha,4,1,1#5,Team Beta,3,1,0#7,Team Gamma,5,0,0\r\n
 ```
+
+**Giải thích:**
+- Group 3: Team Alpha - 4 members - User IS member và IS admin
+- Group 5: Team Beta - 3 members - User IS member nhưng NOT admin
+- Group 7: Team Gamma - 5 members - User NOT member
+
+**Client filtering:**
+- My groups: filter `is_member=1`
+- Other groups: filter `is_member=0`
 
 ---
 
-**Xem danh sách nhóm khác:**
+**Xem members của nhóm (VIEW_GROUP_DETAIL):**
 ```
-C→S: VIEW_OTHER_GROUPS|token=<t>\r\n
-S→C: 200|groups=<g1>#<g2>#...\r\n
-```
-
-**Ví dụ:**
-```
-C→S: VIEW_OTHER_GROUPS|token=token_10_STUDENT\r\n
-S→C: 200|groups=7,Team Gamma,5#9,Team Delta,2\r\n
-```
-
----
-
-**Xem members của nhóm:**
-```
-C→S: VIEW_GROUP_MEMBERS|group_id=<gid>\r\n
-S→C: 200|members=<m1>#<m2>#...\r\n
+C→S: VIEW_GROUP_DETAIL|token=<t>;group_id=<gid>\r\n
+S→C: 200|group_id=<gid>;group_name=<name>;members=<m1>#<m2>#...\r\n
+     Error: 404|msg=Group_not_found\r\n
 ```
 
 **Member format:** `user_id,full_name,is_admin`
@@ -815,15 +815,16 @@ S→C: 200|members=10,Nguyen A,1#12,Tran B,0#15,Le C,0\r\n
 **Gửi yêu cầu vào nhóm:**
 ```
 C→S: REQUEST_JOIN_GROUP|token=<t>;group_id=<gid>;note=<note>\r\n
-S→C: 202|request_id=<rid>;msg=Request_sent\r\n
+S→C: 202|request_id=<rid>;msg=Request_pending\r\n
      Error: 400|msg=Already_member\r\n
-            409|msg=Already_requested\r\n
+            404|msg=Group_not_found\r\n
+            409|msg=Request_already_exists\r\n
 ```
 
 **Ví dụ:**
 ```
 C→S: REQUEST_JOIN_GROUP|token=token_15_STUDENT;group_id=3;note=Please let me join\r\n
-S→C: 202|request_id=50;msg=Request_sent\r\n
+S→C: 202|request_id=50;msg=Request_pending\r\n
 ```
 
 **Server gửi notification:**
@@ -860,7 +861,7 @@ S→C: 200|msg=Request_approved\r\n
 **Ví dụ:**
 ```
 C→S: APPROVE_JOIN_REQUEST|token=token_10_STUDENT;request_id=50\r\n
-S→C: 200|msg=Request_approved\r\n
+S→C: 200|request_id=50;group_id=3;msg=Approved\r\n
 ```
 
 **Server gửi notification:**
@@ -880,7 +881,7 @@ S→C: 200|msg=Request_rejected\r\n
 **Ví dụ:**
 ```
 C→S: REJECT_JOIN_REQUEST|token=token_10_STUDENT;request_id=51;reason=Group is full\r\n
-S→C: 200|msg=Request_rejected\r\n
+S→C: 200|request_id=51;group_id=3;msg=Rejected\r\n
 ```
 
 **Server gửi notification:**

@@ -407,4 +407,18 @@ CMakeFiles/MeetingClient.dir/src/mainwindow.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcheckbox.h \
  /home/khang/meeting-management/client-qt/include/teacherwidget.h \
- /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTimeEdit
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTimeEdit \
+ /home/khang/meeting-management/client-qt/include/serverconfigdialog.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QSettings \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qsettings.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMenuBar \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmenubar.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmenu.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qaction.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qactiongroup.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMenu \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmenu.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QAction \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qaction.h

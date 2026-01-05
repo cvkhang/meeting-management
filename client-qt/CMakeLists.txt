@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Network)
 
 set(HEADERS
     include/networkmanager.h
@@ -15,6 +15,8 @@ set(HEADERS
     include/loginwidget.h
     include/studentwidget.h
     include/teacherwidget.h
+    include/serverconfigdialog.h
+    include/groupdetaildialog.h
 )
 
 set(SOURCES
@@ -24,9 +26,11 @@ set(SOURCES
     src/loginwidget.cpp
     src/studentwidget.cpp
     src/teacherwidget.cpp
+    src/serverconfigdialog.cpp
+    src/groupdetaildialog.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets pthread)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets Qt5::Network pthread)

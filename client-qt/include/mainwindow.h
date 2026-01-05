@@ -28,7 +28,9 @@ public slots:
 private:
     void setupUi();
     void showNotification(const QString &title, const QString &message);
-
+    void showServerConfigDialog();
+    void createMenuBar();
+    
     NetworkManager *m_networkManager;
     QStackedWidget *m_stackedWidget;
     LoginWidget *m_loginWidget;

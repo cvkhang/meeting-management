@@ -174,6 +174,34 @@ CMakeFiles/MeetingClient.dir/src/teacherwidget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MeetingClient.dir/src/teacherwidget.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/khang/meeting-management/client-qt/src/teacherwidget.cpp -o CMakeFiles/MeetingClient.dir/src/teacherwidget.cpp.s
 
+CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o: CMakeFiles/MeetingClient.dir/flags.make
+CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o: /home/khang/meeting-management/client-qt/src/serverconfigdialog.cpp
+CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o: CMakeFiles/MeetingClient.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/khang/meeting-management/client-qt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o -MF CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o.d -o CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o -c /home/khang/meeting-management/client-qt/src/serverconfigdialog.cpp
+
+CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/khang/meeting-management/client-qt/src/serverconfigdialog.cpp > CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.i
+
+CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/khang/meeting-management/client-qt/src/serverconfigdialog.cpp -o CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.s
+
+CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o: CMakeFiles/MeetingClient.dir/flags.make
+CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o: /home/khang/meeting-management/client-qt/src/groupdetaildialog.cpp
+CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o: CMakeFiles/MeetingClient.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/khang/meeting-management/client-qt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o -MF CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o.d -o CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o -c /home/khang/meeting-management/client-qt/src/groupdetaildialog.cpp
+
+CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/khang/meeting-management/client-qt/src/groupdetaildialog.cpp > CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.i
+
+CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/khang/meeting-management/client-qt/src/groupdetaildialog.cpp -o CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.s
+
 # Object files for target MeetingClient
 MeetingClient_OBJECTS = \
 "CMakeFiles/MeetingClient.dir/MeetingClient_autogen/mocs_compilation.cpp.o" \
@@ -182,7 +210,9 @@ MeetingClient_OBJECTS = \
 "CMakeFiles/MeetingClient.dir/src/mainwindow.cpp.o" \
 "CMakeFiles/MeetingClient.dir/src/loginwidget.cpp.o" \
 "CMakeFiles/MeetingClient.dir/src/studentwidget.cpp.o" \
-"CMakeFiles/MeetingClient.dir/src/teacherwidget.cpp.o"
+"CMakeFiles/MeetingClient.dir/src/teacherwidget.cpp.o" \
+"CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o" \
+"CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o"
 
 # External object files for target MeetingClient
 MeetingClient_EXTERNAL_OBJECTS =
@@ -194,12 +224,15 @@ MeetingClient: CMakeFiles/MeetingClient.dir/src/mainwindow.cpp.o
 MeetingClient: CMakeFiles/MeetingClient.dir/src/loginwidget.cpp.o
 MeetingClient: CMakeFiles/MeetingClient.dir/src/studentwidget.cpp.o
 MeetingClient: CMakeFiles/MeetingClient.dir/src/teacherwidget.cpp.o
+MeetingClient: CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o
+MeetingClient: CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o
 MeetingClient: CMakeFiles/MeetingClient.dir/build.make
 MeetingClient: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
+MeetingClient: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
 MeetingClient: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13
 MeetingClient: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
 MeetingClient: CMakeFiles/MeetingClient.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/khang/meeting-management/client-qt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable MeetingClient"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/khang/meeting-management/client-qt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable MeetingClient"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MeetingClient.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

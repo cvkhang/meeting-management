@@ -62,9 +62,12 @@ private:
     QSpinBox *m_meetingIdSpin;
     QTextEdit *m_minutesEdit;
     int m_currentMinuteId;
+    QDateEdit *m_meetingFromDate;
+    QDateEdit *m_meetingToDate;
     
     // History tab
     QTableWidget *m_historyTable;
+    QComboBox *m_historyStatusCombo;
 };
 
 #endif // TEACHERWIDGET_H

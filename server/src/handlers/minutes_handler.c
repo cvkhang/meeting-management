@@ -62,8 +62,17 @@ void handle_save_minutes(int socket_fd, char *payload) {
 
     if (sqlite3_step(stmt) == SQLITE_DONE) {
         int minute_id = (int)sqlite3_last_insert_rowid(db);
+        
+        // Auto-update meeting status to DONE
+        const char *update_sql = "UPDATE meetings SET status = 'DONE' WHERE meeting_id = ?";
+        sqlite3_stmt *update_stmt;
+        sqlite3_prepare_v2(db, update_sql, -1, &update_stmt, NULL);
+        sqlite3_bind_int(update_stmt, 1, meeting_id);
+        sqlite3_step(update_stmt);
+        sqlite3_finalize(update_stmt);
+        
         char response[256];
-        snprintf(response, sizeof(response), "201|minute_id=%d;meeting_id=%d;msg=Minutes_saved\r\n", minute_id, meeting_id);
+        snprintf(response, sizeof(response), "201|minute_id=%d;meeting_id=%d;msg=Minutes_saved;status=DONE\r\n", minute_id, meeting_id);
         send_response(socket_fd, response);
     } else {
         char *response = "500|msg=Save_Failed\r\n";

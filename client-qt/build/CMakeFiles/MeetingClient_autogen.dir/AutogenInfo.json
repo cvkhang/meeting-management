@@ -64,13 +64,24 @@
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
-		"/usr/share/cmake-3.28/Modules/CMakeParseArguments.cmake"
+		"/usr/share/cmake-3.28/Modules/CMakeParseArguments.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake"
 	],
 	"CMAKE_SOURCE_DIR" : "/home/khang/meeting-management/client-qt",
 	"DEP_FILE" : "/home/khang/meeting-management/client-qt/build/MeetingClient_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "MeetingClient_autogen/timestamp",
 	"HEADERS" : 
 	[
+		[
+			"/home/khang/meeting-management/client-qt/include/groupdetaildialog.h",
+			"MU",
+			"6YEA5652QU/moc_groupdetaildialog.cpp",
+			null
+		],
 		[
 			"/home/khang/meeting-management/client-qt/include/loginwidget.h",
 			"MU",
@@ -90,6 +101,12 @@
 			null
 		],
 		[
+			"/home/khang/meeting-management/client-qt/include/serverconfigdialog.h",
+			"MU",
+			"6YEA5652QU/moc_serverconfigdialog.cpp",
+			null
+		],
+		[
 			"/home/khang/meeting-management/client-qt/include/studentwidget.h",
 			"MU",
 			"6YEA5652QU/moc_studentwidget.cpp",
@@ -105,7 +122,14 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/khang/meeting-management/client-qt/build/MeetingClient_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/khang/meeting-management/client-qt/build/MeetingClient_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_NO_DEBUG",
+		"QT_WIDGETS_LIB"
+	],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -121,6 +145,7 @@
 		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
 		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
 		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include/x86_64-linux-gnu/qt5/QtNetwork",
 		"/usr/include/c++/13",
 		"/usr/include/x86_64-linux-gnu/c++/13",
 		"/usr/include/c++/13/backward",
@@ -155,6 +180,11 @@
 	"SOURCES" : 
 	[
 		[
+			"/home/khang/meeting-management/client-qt/src/groupdetaildialog.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/khang/meeting-management/client-qt/src/loginwidget.cpp",
 			"MU",
 			null
@@ -167,6 +197,11 @@
 		],
 		[
 			"/home/khang/meeting-management/client-qt/src/networkmanager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/khang/meeting-management/client-qt/src/serverconfigdialog.cpp",
 			"MU",
 			null
 		],

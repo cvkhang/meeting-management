@@ -3,15 +3,19 @@ MeetingClient_autogen/timestamp: \
 	/home/khang/meeting-management/client-qt/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
 	/home/khang/meeting-management/client-qt/build/CMakeFiles/3.28.3/CMakeSystem.cmake \
 	/home/khang/meeting-management/client-qt/build/MeetingClient_autogen/moc_predefs.h \
+	/home/khang/meeting-management/client-qt/include/groupdetaildialog.h \
 	/home/khang/meeting-management/client-qt/include/loginwidget.h \
 	/home/khang/meeting-management/client-qt/include/mainwindow.h \
 	/home/khang/meeting-management/client-qt/include/networkmanager.h \
+	/home/khang/meeting-management/client-qt/include/serverconfigdialog.h \
 	/home/khang/meeting-management/client-qt/include/studentwidget.h \
 	/home/khang/meeting-management/client-qt/include/teacherwidget.h \
+	/home/khang/meeting-management/client-qt/src/groupdetaildialog.cpp \
 	/home/khang/meeting-management/client-qt/src/loginwidget.cpp \
 	/home/khang/meeting-management/client-qt/src/main.cpp \
 	/home/khang/meeting-management/client-qt/src/mainwindow.cpp \
 	/home/khang/meeting-management/client-qt/src/networkmanager.cpp \
+	/home/khang/meeting-management/client-qt/src/serverconfigdialog.cpp \
 	/home/khang/meeting-management/client-qt/src/studentwidget.cpp \
 	/home/khang/meeting-management/client-qt/src/teacherwidget.cpp \
 	/usr/include/arpa/inet.h \
@@ -288,6 +292,7 @@ MeetingClient_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/gnu/stubs.h \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/QMutex \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
+	/usr/include/x86_64-linux-gnu/qt5/QtCore/QSettings \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/QThread \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h \
@@ -340,6 +345,7 @@ MeetingClient_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qregularexpression.h \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
+	/usr/include/x86_64-linux-gnu/qt5/QtCore/qsettings.h \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer.h \
 	/usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer_impl.h \
@@ -391,6 +397,7 @@ MeetingClient_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox \
 	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QComboBox \
 	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDateEdit \
+	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
 	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QFormLayout \
 	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QGroupBox \
 	/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHBoxLayout \
@@ -492,6 +499,11 @@ MeetingClient_autogen/timestamp: \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfig.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake \

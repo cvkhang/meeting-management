@@ -167,15 +167,27 @@ void handle_view_meetings(int socket_fd, char *payload) {
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         if (!first) strcat(buffer, "#");
         char item[256];
+        /*
+         * Response format: meeting_id,date,start_time,end_time,slot_id,teacher_id,meeting_type,status
+         * Column indices:
+         *   0 - meeting_id   : ID của meeting
+         *   1 - date         : Ngày (từ bảng slots)
+         *   2 - start_time   : Giờ bắt đầu (từ bảng slots)
+         *   3 - end_time     : Giờ kết thúc (từ bảng slots)
+         *   4 - slot_id      : ID của slot
+         *   5 - teacher_id   : ID của teacher (đối với student view)
+         *   6 - meeting_type : INDIVIDUAL hoặc GROUP
+         *   7 - status       : BOOKED, DONE, CANCELLED
+         */
         snprintf(item, sizeof(item), "%d,%s,%s,%s,%d,%d,%s,%s",
-            sqlite3_column_int(stmt, 0),
-            sqlite3_column_text(stmt, 1),
-            sqlite3_column_text(stmt, 2),
-            sqlite3_column_text(stmt, 3),
-            sqlite3_column_int(stmt, 4),
-            sqlite3_column_int(stmt, 5),
-            sqlite3_column_text(stmt, 6),
-            sqlite3_column_text(stmt, 7));
+            sqlite3_column_int(stmt, 0),    // meeting_id
+            sqlite3_column_text(stmt, 1),   // date
+            sqlite3_column_text(stmt, 2),   // start_time
+            sqlite3_column_text(stmt, 3),   // end_time
+            sqlite3_column_int(stmt, 4),    // slot_id
+            sqlite3_column_int(stmt, 5),    // teacher_id
+            sqlite3_column_text(stmt, 6),   // meeting_type
+            sqlite3_column_text(stmt, 7));  // status
         strcat(buffer, item);
         first = 0;
     }

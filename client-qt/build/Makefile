@@ -179,6 +179,30 @@ MeetingClient_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/MeetingClient_autogen/mocs_compilation.cpp.s
 .PHONY : MeetingClient_autogen/mocs_compilation.cpp.s
 
+src/groupdetaildialog.o: src/groupdetaildialog.cpp.o
+.PHONY : src/groupdetaildialog.o
+
+# target to build an object file
+src/groupdetaildialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.o
+.PHONY : src/groupdetaildialog.cpp.o
+
+src/groupdetaildialog.i: src/groupdetaildialog.cpp.i
+.PHONY : src/groupdetaildialog.i
+
+# target to preprocess a source file
+src/groupdetaildialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.i
+.PHONY : src/groupdetaildialog.cpp.i
+
+src/groupdetaildialog.s: src/groupdetaildialog.cpp.s
+.PHONY : src/groupdetaildialog.s
+
+# target to generate assembly for a file
+src/groupdetaildialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/groupdetaildialog.cpp.s
+.PHONY : src/groupdetaildialog.cpp.s
+
 src/loginwidget.o: src/loginwidget.cpp.o
 .PHONY : src/loginwidget.o
 
@@ -275,6 +299,30 @@ src/networkmanager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/networkmanager.cpp.s
 .PHONY : src/networkmanager.cpp.s
 
+src/serverconfigdialog.o: src/serverconfigdialog.cpp.o
+.PHONY : src/serverconfigdialog.o
+
+# target to build an object file
+src/serverconfigdialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.o
+.PHONY : src/serverconfigdialog.cpp.o
+
+src/serverconfigdialog.i: src/serverconfigdialog.cpp.i
+.PHONY : src/serverconfigdialog.i
+
+# target to preprocess a source file
+src/serverconfigdialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.i
+.PHONY : src/serverconfigdialog.cpp.i
+
+src/serverconfigdialog.s: src/serverconfigdialog.cpp.s
+.PHONY : src/serverconfigdialog.s
+
+# target to generate assembly for a file
+src/serverconfigdialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MeetingClient.dir/build.make CMakeFiles/MeetingClient.dir/src/serverconfigdialog.cpp.s
+.PHONY : src/serverconfigdialog.cpp.s
+
 src/studentwidget.o: src/studentwidget.cpp.o
 .PHONY : src/studentwidget.o
 
@@ -337,6 +385,9 @@ help:
 	@echo "... MeetingClient_autogen/mocs_compilation.o"
 	@echo "... MeetingClient_autogen/mocs_compilation.i"
 	@echo "... MeetingClient_autogen/mocs_compilation.s"
+	@echo "... src/groupdetaildialog.o"
+	@echo "... src/groupdetaildialog.i"
+	@echo "... src/groupdetaildialog.s"
 	@echo "... src/loginwidget.o"
 	@echo "... src/loginwidget.i"
 	@echo "... src/loginwidget.s"
@@ -349,6 +400,9 @@ help:
 	@echo "... src/networkmanager.o"
 	@echo "... src/networkmanager.i"
 	@echo "... src/networkmanager.s"
+	@echo "... src/serverconfigdialog.o"
+	@echo "... src/serverconfigdialog.i"
+	@echo "... src/serverconfigdialog.s"
 	@echo "... src/studentwidget.o"
 	@echo "... src/studentwidget.i"
 	@echo "... src/studentwidget.s"
