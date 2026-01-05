@@ -1,0 +1,5 @@
+/home/khang/meeting-management/client-qt/build/CMakeFiles/MeetingClient.dir
+/home/khang/meeting-management/client-qt/build/CMakeFiles/edit_cache.dir
+/home/khang/meeting-management/client-qt/build/CMakeFiles/rebuild_cache.dir
+/home/khang/meeting-management/client-qt/build/CMakeFiles/MeetingClient_autogen_timestamp_deps.dir
+/home/khang/meeting-management/client-qt/build/CMakeFiles/MeetingClient_autogen.dir
