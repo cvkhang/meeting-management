@@ -86,6 +86,10 @@ void handle_login(int socket_fd, char *payload) {
         char token[64];
         snprintf(token, sizeof(token), "token_%d_%s", user_id, role);
         
+        // FIX: Unregister any old client entry on this socket before registering new one
+        // This prevents notifications for old user from being sent to new user on same socket
+        unregister_client(socket_fd);
+        
         // Register client in the registry
         register_client(socket_fd, user_id);
         
